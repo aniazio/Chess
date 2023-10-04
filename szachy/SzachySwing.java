@@ -220,10 +220,8 @@ public class SzachySwing implements ActionListener {
                             if(b.plansza[koniecx][koniecy].getStan()==6 ||
                                     b.plansza[koniecx][koniecy].getStan()==8) {              //sprawdzamy poprawność roszady:
 
-                                //czy król nie jest aktualnie szachowany
-                                if (b.czySzach(((kol + 1) % 2), kingx, kingy)) {
-                                    dobryruch = false;
-                                }
+                                //czy król jest szachowany
+                                if(szach) dobryruch=false;
                                 
                                 //czy król nie przechodzi przez szach
                                 int znak = (b.plansza[koniecx][koniecy].getStan()==6) ? 1 : -1;
