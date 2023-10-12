@@ -2,7 +2,7 @@
 
 ENG
 
-In the project I made a chess game for two players. I use Swing to create GUI. To make a move player shoud push a button with a chosen piece and then push a button of a square, where he wants to put the piece. In the top left corner program shows information, who shoud make a move and if there is check, mate or stalemate.
+In the project I made a chess game for two players. I use Swing to create GUI. If player wants to make a move, he shoud push a button with a chosen piece and then push a button of a square, where he wants to put the piece. In the top left corner program shows information who shoud make a move and also the message if there is check, mate or stalemate.
 
 The program uses polymorphism: there are many different types of pieces on the board, which can be operated without knowledge about what type of piece the program deals with. In the project I also used such tools like inheritance, abstract classes and threads.
 
