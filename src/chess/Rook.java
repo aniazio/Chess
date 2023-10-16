@@ -19,7 +19,7 @@ public class Rook extends Square {
 
         if((horizontalAbs == 0 && verticalAbs != 0) | (verticalAbs == 0 && horizontalAbs != 0)){
             for(int i = 1; i < (verticalAbs + horizontalAbs); i++) {
-                if(board[sx + (i*horizontalSign)][sy + (i*verticalSign)].getPiece() == ChessPiece.Empty) return false;
+                if(board[sx + (i*horizontalSign)][sy + (i*verticalSign)].getPiece() != ChessPiece.Empty) return false;
             }
             if(board[ex][ey].getPiece() != ChessPiece.Empty && board[ex][ey].getColor() == getColor()) return false;
             setState(NORMAL_STATE);
