@@ -43,14 +43,14 @@ public class ChessSwing implements ActionListener {
         addLabelsAndButtonsTo(jfrm);
     }
 
-    public void setUpJFrameOf(JFrame jfrm) {
+    private void setUpJFrameOf(JFrame jfrm) {
         jfrm.setLayout(new GridLayout(9,9));
         jfrm.setSize(640,640);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.setVisible(true);
     }
 
-    public void setUpPopupMenu() {
+    private void setUpPopupMenu() {
         pawnPromotionMenu = new MyPopupMenu("Pawn's promotion");
         var queen = new JMenuItem("Queen");
         var rook = new JMenuItem("Rook");
@@ -93,19 +93,19 @@ public class ChessSwing implements ActionListener {
     }
 
 
-    public void addLabelsAndButtonsTo(JFrame jfrm) {
+    private void addLabelsAndButtonsTo(JFrame jfrm) {
         addCornerTo(jfrm);
         addColsMarkingsTo(jfrm);
         addRowsMarkingsAndButtonsTo(jfrm);
     }
 
-    public void addCornerTo(JFrame jfrm) {
+    private void addCornerTo(JFrame jfrm) {
         corner = new JLabel("<html>White's<br>move</html>");
         corner.setHorizontalAlignment(JLabel.CENTER);
         jfrm.add(corner);
     }
 
-    public void addColsMarkingsTo(JFrame jfrm) {
+    private void addColsMarkingsTo(JFrame jfrm) {
         JLabel markingsOfCols[] = new JLabel[8];
         JPanel jpanelsForColsMarkings[] = new JPanel[8];
 
@@ -115,7 +115,7 @@ public class ChessSwing implements ActionListener {
         }
     }
 
-    public void addRowsMarkingsAndButtonsTo(JFrame jfrm) {
+    private void addRowsMarkingsAndButtonsTo(JFrame jfrm) {
         JLabel markingsOfRows[] = new JLabel[8];
         JPanel jpanelsForRowsMarkings[] = new JPanel[8];
 
@@ -128,7 +128,7 @@ public class ChessSwing implements ActionListener {
         }
     }
 
-    public void addMarking(String str, JLabel label, JPanel panel, JFrame jfrm, int placeOnLabel, String placeOnBorderLO) {
+    private void addMarking(String str, JLabel label, JPanel panel, JFrame jfrm, int placeOnLabel, String placeOnBorderLO) {
         label = new JLabel(str, placeOnLabel);
         label.setFont(new Font("Arial", Font.PLAIN, 16));
         panel = new JPanel();
@@ -137,7 +137,7 @@ public class ChessSwing implements ActionListener {
         jfrm.add(panel);
     }
 
-    public void setUpButton(JFrame jfrm, int i, int j) {
+    private void setUpButton(JFrame jfrm, int i, int j) {
         Character c = (char) ('a' + i);
         String squareName = c.toString() + j;         //cords of a square e.g. a1
         squares[i][j-1] = new JButton();
@@ -148,7 +148,7 @@ public class ChessSwing implements ActionListener {
         jfrm.add(squares[i][j-1]);
     }
 
-    public void setButtonDisplay(int i, int j) {
+    private void setButtonDisplay(int i, int j) {
         ChessPiece fig = chessboard.board[i][j-1].getPiece();
         int color = chessboard.board[i][j-1].getColor();
 
@@ -208,12 +208,12 @@ public class ChessSwing implements ActionListener {
         }).start();
     }
 
-    public void readMove(String squareName) {
+    private void readMove(String squareName) {
         if (moveStatus == MOVE_FINISHED) readFistPartOfMove(squareName);
         else readSecondPartOfMove(squareName);
     }
 
-    public void readFistPartOfMove(String squareName) {
+    private void readFistPartOfMove(String squareName) {
         int squareX = squareName.charAt(0) - 97;
         int squareY = squareName.charAt(1) - 49;
         if(chessboard.board[squareX][squareY].getColor() == (color % 2) &&
@@ -224,19 +224,19 @@ public class ChessSwing implements ActionListener {
         } else moveStatus = (moveStatus + 1) % 2;
     }
 
-    public void readSecondPartOfMove(String squareName) {
+    private void readSecondPartOfMove(String squareName) {
         endX = squareName.charAt(0) - 97;
         endY = squareName.charAt(1) - 49;
         if ((startX+startY)%2 == 1) squares[startX][startY].setBackground(Color.white);
         else squares[startX][startY].setBackground(Color.gray);
     }
 
-    public void makeMove() {
+    private void makeMove() {
         chessboard.board[endX][endY] = movedFigure;
         chessboard.board[startX][startY] = chessboard.emptyBoard[startX][startY];
     }
 
-    public void actualizeKingCords(Square startingSquare, int endingSquareX, int endingSquareY) {
+    private void actualizeKingCords(Square startingSquare, int endingSquareX, int endingSquareY) {
         if(startingSquare.getPiece() == ChessPiece.King) {
             if(color == WHITES_MOVE) {
                 chessboard.whiteKingX = endingSquareX;
@@ -248,14 +248,14 @@ public class ChessSwing implements ActionListener {
         }
     }
 
-    public void undoMove() {
+    private void undoMove() {
         chessboard.board[startX][startY] = chessboard.board[endX][endY];
         chessboard.board[endX][endY] = endSquare;
         chessboard.board[startX][startY].setState(movedFigure.getState());
         if(movedFigure.getPiece() == ChessPiece.King) actualizeKingCords(chessboard.board[endX][endY], startX, startY);
     }
 
-    public boolean isKingComingThroughCheck() {
+    private boolean isKingComingThroughCheck() {
         if(check) return true;
         boolean result = false;
         int sign = (chessboard.board[endX][endY].getState() == Square.SHORT_CASTLE_STATE) ? 1 : -1;
@@ -283,12 +283,12 @@ public class ChessSwing implements ActionListener {
         return result;
     }
 
-    public void makeMoveOnDisplay() {
+    private void makeMoveOnDisplay() {
         squares[endX][endY].setIcon(squares[startX][startY].getIcon());
         squares[startX][startY].setIcon(null);
     }
 
-    public void updateBoardInSpecialCaseOfEnPassant() {
+    private void updateBoardInSpecialCaseOfEnPassant() {
         if (chessboard.board[endX][endY].getState() == Square.AFTER_EN_PASSANT) {
             chessboard.board[endX][startY] = chessboard.emptyBoard[endX][startY];
             squares[endX][startY].setIcon(null);
@@ -296,7 +296,7 @@ public class ChessSwing implements ActionListener {
         }
     }
 
-    public void updateBoardInSpecialCaseOfCastle() {
+    private void updateBoardInSpecialCaseOfCastle() {
         if (chessboard.board[endX][endY].getState() == Square.SHORT_CASTLE_STATE) {
             specialCaseOfShortCastle();
         }
@@ -305,7 +305,7 @@ public class ChessSwing implements ActionListener {
         }
     }
 
-    public void specialCaseOfShortCastle() {
+    private void specialCaseOfShortCastle() {
         chessboard.board[endX-1][endY] = chessboard.board[endX+1][endY];
         squares[endX-1][endY].setIcon(squares[endX+1][endY].getIcon());
         chessboard.board[endX+1][endY] = chessboard.emptyBoard[endX+1][endY];
@@ -314,7 +314,7 @@ public class ChessSwing implements ActionListener {
         chessboard.board[endX-1][endY].setState(Square.NORMAL_STATE);
     }
 
-    public void specialCaseOfLongCastle() {
+    private void specialCaseOfLongCastle() {
         chessboard.board[endX+1][endY] = chessboard.board[endX-2][endY];
         squares[endX+1][endY].setIcon(squares[endX-2][endY].getIcon());
         chessboard.board[endX-2][endY] = chessboard.emptyBoard[endX-2][endY];
@@ -323,7 +323,7 @@ public class ChessSwing implements ActionListener {
         chessboard.board[endX+1][endY].setState(Square.NORMAL_STATE);
     }
 
-    public void resetPawnsState() {
+    private void resetPawnsState() {
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++) {
                 if (chessboard.board[i][j].getState() == Square.AFTER_2SQUARE_PAWN_MOVE2) {
@@ -335,7 +335,7 @@ public class ChessSwing implements ActionListener {
             }
     }
 
-    public void promotePawn() {
+    private void promotePawn() {
         Integer kolor = chessboard.board[endX][endY].getColor();
         int ey = (kolor == WHITES_MOVE) ? 7 : 0;
 
@@ -353,7 +353,7 @@ public class ChessSwing implements ActionListener {
         }
     }
 
-    public void putTextInCorner() {
+    private void putTextInCorner() {
         String str = "";
         if (color == WHITES_MOVE) str = "<html>White's<br>move";
         else str = "<html>Black's<br>move";
