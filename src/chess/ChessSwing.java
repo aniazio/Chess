@@ -48,6 +48,7 @@ public class ChessSwing implements ActionListener {
         jfrm.setSize(640,640);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.setVisible(true);
+        jfrm.setLocationRelativeTo(null);
     }
 
     private void setUpPopupMenu() {
