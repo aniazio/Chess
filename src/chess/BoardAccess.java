@@ -1,5 +1,7 @@
 package chess;
 
+import chess.pieces.*;
+
 public class BoardAccess {
 
     Square[][] emptyBoard = new Square[8][8];     //board with empty squares
@@ -10,7 +12,7 @@ public class BoardAccess {
     private final int BLACK = 0;
     private final int WHITE = 1;
 
-    void initialize() {
+    BoardAccess() {
         for(int i=0; i<8;i++){
             for(int j=0; j<8; j++) {
                 emptyBoard[i][j] = new Empty(EMPTY_SQUARE_COLOR);
@@ -93,4 +95,3 @@ public class BoardAccess {
         return mate;
     }
 }
-
